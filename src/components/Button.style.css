@@ -1,0 +1,17 @@
+.btn-wrapper {
+	display: flex;
+	justify-content: center;
+}
+
+button {
+	width: 100%;
+	max-width: 240px;
+	margin: auto;
+	padding: 10px;
+	border: none;
+	border-radius: 20px;
+
+	font-size: 25px;
+	font-weight: 700;
+	font-family: 'Nunito', sans-serif;
+}
