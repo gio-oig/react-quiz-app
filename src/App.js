@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
+import { css } from '@emotion/core';
+import { BeatLoader } from 'react-spinners';
 import { useForm } from 'react-hook-form';
 
-import CuestionCard from './components/CuestionCard';
-// types
-// import { QuestionState, Difficulty } from './API';
-import { QuestionState } from './API';
-import { fetchQuizeQuestions } from './API';
+import { fetchQuestions } from './API';
 
+import CuestionCard from './components/CuestionCard';
 import Button from './components/Button';
 
 import './App.css';
 
-const TOTAL_QUESTIONS = 10;
+const loaderCSS = css`
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	transform: translateX(-50%);
+`;
+
+const TOTAL_QUESTIONS = 2;
 
 function App() {
 	const { register, handleSubmit } = useForm();
@@ -22,18 +28,17 @@ function App() {
 	const [score, setScore] = useState(0);
 	const [gameOver, setGameOver] = useState(true);
 
-	const startTrivia = async (dif, type) => {
+	const startGame = async (dif, type) => {
 		setLoading(true);
 		setGameOver(false);
 
-		const newQuestions = await fetchQuizeQuestions(dif, type);
+		const newQuestions = await fetchQuestions(dif, type);
 
 		setQuestions(newQuestions);
 		setScore(0);
 		setUserAnswers([]);
 		setNumber(0);
 		setLoading(false);
-		console.log(newQuestions);
 	};
 
 	const checkAnswer = (e) => {
@@ -41,7 +46,7 @@ function App() {
 			const answer = e.currentTarget.value;
 
 			const correct = questions[number].correct_answer === answer;
-			console.log(answer);
+
 			if (correct) setScore((prevScore) => prevScore + 1);
 
 			const answerObject = {
@@ -58,23 +63,20 @@ function App() {
 	const nextQuestion = () => {
 		const nextQuestion = number + 1;
 
-		nextQuestion === TOTAL_QUESTIONS
-			? setGameOver(true)
-			: setNumber(nextQuestion);
+		setNumber(nextQuestion);
 	};
 
 	const onSubmit = (data) => {
 		const { difficulty, type } = data;
-		startTrivia(difficulty, type);
-		// console.log(a);
+		startGame(difficulty, type);
 	};
 
 	return (
 		<div className="App">
 			<section id="main">
+				<h1 className="heading">QUIZIZ</h1>
 				{gameOver && (
 					<>
-						<h1 className="heading">QUIZIZ</h1>
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<div className="form-control">
 								<label htmlFor="difficulty">Select Difficulty:</label>
@@ -100,13 +102,12 @@ function App() {
 									<option value="boolean">true / false</option>
 								</select>
 							</div>
-							<Button text="Start" />
+							<Button>Start</Button>
 						</form>
 					</>
 				)}
-				{!gameOver ? <p className="score">score: {score}</p> : null}
-				{loading && <p>Loading Questions....</p>}
-				{!loading && !gameOver ? (
+				<BeatLoader loading={loading} css={loaderCSS} size="30" color="white" />
+				{!loading && !gameOver && userAnswers.length !== TOTAL_QUESTIONS ? (
 					<CuestionCard
 						question={questions[number].question}
 						answers={questions[number].answers}
@@ -117,13 +118,23 @@ function App() {
 					/>
 				) : null}
 				{!loading &&
-				!gameOver &&
-				userAnswers.length === number + 1 &&
-				number !== TOTAL_QUESTIONS - 1 ? (
-					<button className="next" onClick={nextQuestion}>
-						Next Question
-					</button>
-				) : null}
+					!gameOver &&
+					userAnswers.length === number + 1 &&
+					number !== TOTAL_QUESTIONS - 1 && (
+						<Button invert onClick={nextQuestion}>
+							Next Question
+						</Button>
+					)}
+
+				{userAnswers.length === TOTAL_QUESTIONS && !gameOver && (
+					<>
+						<p className="score">correct: {score}</p>
+						<p className="score">incorrect: {TOTAL_QUESTIONS - score}</p>
+						<Button invert onClick={() => setGameOver(true)}>
+							Restart
+						</Button>
+					</>
+				)}
 			</section>
 		</div>
 	);

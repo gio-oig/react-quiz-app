@@ -24,12 +24,13 @@ body {
 }
 
 section#main {
-	width: 100%;
+	width: 90%;
 	max-width: 700px;
 	margin: auto;
 }
 
 h1.heading {
+	margin-bottom: 5rem;
 	font-size: 5rem;
 	font-weight: 700;
 	color: var(--primary-white);
@@ -69,4 +70,9 @@ h1.heading {
 	background-repeat: no-repeat, repeat;
 	background-position: right 0.7em top 50%, 0 0;
 	background-size: 0.65em auto, 100%;
+}
+
+.score {
+	font-size: 4rem;
+	color: var(--primary-white);
 }

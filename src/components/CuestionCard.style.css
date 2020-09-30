@@ -1,0 +1,33 @@
+.question-card__question {
+	margin: 0 0 4rem 0;
+
+	font-size: 3rem;
+	font-weight: 700;
+
+	color: #fff;
+}
+
+.question-card__answer-box {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-bottom: 3rem;
+}
+
+.question-card__answer {
+	width: 100%;
+	max-width: 330px;
+	margin: 0 1rem 2rem 0;
+	padding: 1rem;
+	font-size: 20px;
+	font-weight: 600;
+	color: #fff;
+
+	border: none;
+	border-radius: 7px;
+
+	background: #005375;
+
+	outline: none;
+	cursor: pointer;
+}

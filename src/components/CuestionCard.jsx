@@ -1,5 +1,6 @@
 import React from 'react';
-import { AnswersObject } from '../App';
+
+import './CuestionCard.style.css';
 
 const CuestionCard = ({
 	question,
@@ -10,18 +11,22 @@ const CuestionCard = ({
 	totalQuestions,
 }) => {
 	return (
-		<div>
-			<p className="number">
+		<div className="question-card">
+			{/* <p className="number">
 				{questionNr} / {totalQuestions}
-			</p>
-			<p>question </p>
-			<div>
+			</p> */}
+			<p className="question-card__question">{question}</p>
+			<div className="question-card__answer-box">
 				{answers.map((answer) => (
-					<div key={answer}>
-						<button disabled={!!userAnswer} value={answer} onClick={callback}>
-							<span>{answer}</span>
-						</button>
-					</div>
+					<button
+						key={answer}
+						disabled={!!userAnswer}
+						value={answer}
+						onClick={callback}
+						className="question-card__answer"
+					>
+						<span>{answer}</span>
+					</button>
 				))}
 			</div>
 		</div>
