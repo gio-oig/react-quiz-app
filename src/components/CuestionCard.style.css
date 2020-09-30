@@ -31,3 +31,10 @@
 	outline: none;
 	cursor: pointer;
 }
+
+.question-count {
+	font-size: 20px;
+	font-weight: 700;
+	text-align: right;
+	color: var(--dark-blue);
+}

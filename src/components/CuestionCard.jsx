@@ -12,9 +12,9 @@ const CuestionCard = ({
 }) => {
 	return (
 		<div className="question-card">
-			{/* <p className="number">
+			<p className="question-count">
 				{questionNr} / {totalQuestions}
-			</p> */}
+			</p>
 			<p className="question-card__question">{question}</p>
 			<div className="question-card__answer-box">
 				{answers.map((answer) => (

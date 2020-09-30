@@ -1,7 +1,9 @@
 import { randomizeAnswersPossitions } from './utils';
 
-export const fetchQuestions = async (difficulty, type) => {
-	const API = `https://opentdb.com/api.php?amount=10&difficulty=${difficulty}&type=${
+export const fetchQuestions = async (category, difficulty, type) => {
+	const API = `https://opentdb.com/api.php?amount=10&category=${
+		category === 'any' ? '' : category
+	}&difficulty=${difficulty === 'any' ? '' : difficulty}&type=${
 		type === 'any' ? '' : type
 	}`;
 	const response = await fetch(API);
